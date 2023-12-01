@@ -9,24 +9,20 @@
 
 <body>
 
-    <pre id="app"></pre>
+    <pre id="titleBook"></pre>
+    <pre id="author"></pre>
+    <div>Анотация:</div><br>
+    <div id="annotation"></div>
+    <br><hr>
+    <div id="section">
+        <div id="section__title">
+            <div id="section__title-p"></div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            let url = "Kent.fb2";
-            fetch(url)
-                .then(response => response.text())
-                .then(data => {
-                    let parser = new DOMParser();
-                    let xml = parser.parseFromString(data, "text/xml");
-                    console.log(xml)
-                })
-        })
+        </div>
 
+    </div>
 
-
-
-    </script>
+    <script src="script.js" ></script>
 </body>
 
 </html>
