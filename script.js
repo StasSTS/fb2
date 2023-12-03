@@ -13,43 +13,106 @@ const xmlParser = (url) => {
 function someMethod(data) {
     let parser = new DOMParser();
     let xml = parser.parseFromString(data, "text/xml");
+    
     console.log(xml); //xml документ
 
-    //если всё, что ниже вынести за пределы fetch - не работает.
-    const titleBook = xml.querySelector("book-title").textContent;
-    const author = xml.querySelector("first-name").textContent +  " " +  xml.querySelector("last-name").textContent;;
-    const annotation =  xml.querySelector("annotation").innerHTML 
-    document.getElementById("titleBook").textContent = `Название: ${titleBook}`;
-    document.getElementById("author").textContent = `Автор: ${author}`;
-    console.log(titleBook);
-    console.log(author);
-    console.log(annotation);
+    const node = 'annotation';
+    content = '';
+    const start = xml.querySelector('description')
+    const parent = xml.getElementsByTagName(node)
 
-    document.getElementById("annotation").innerHTML = `${annotation}`;
+    // console.log(start)
+    console.log(parent[0].innerHTML)
+   
+   
+    // document.getElementById("annotation").innerHTML = parent[0].innerHTML;
+    let content1 = '';
+    let tag_start = '';
+    let  tag_end = '';
+    let nodecont = '';
+   for (const iterator of parent) {
+    console.log(iterator.children)
+    let children = iterator.children
+    for (const key of children){
+        console.log(key.tagName)
+        console.log(key.children)
+        if (key.childNodes.length > 0) {
+        for (let i = 0; i < key.childNodes.length; i++){
+            console.log(key.children  )
 
-    const section = [];
-    const sectionAll = xml.querySelectorAll("section");
-    console.log(sectionAll)
+    // данную проверку оформить рекурсивно через функцию 
+            
+            if(key.tagName === 'title'){
+                tag_start = '<p>';
+                tag_end = '</p>'  
+                content1 += tag_start+key.innerHTML+tag_end
+                              
+            }
 
-    // проходим foreach по блоку ssection
-    let content = '';
-    let title_content = ''
-         sectionAll.forEach(element => {
+            if(key.tagName === 'poem'){
+                tag_start = '<p>';
+                tag_end = '</p>'  
+                content1 = tag_start+key.innerHTML+tag_end
+                              
+            }
             
 
-           let tag_start = '';
-           let  tag_end = '';
-           let node = element.tagName
+            if(key.tagName === 'v'){
+                console.log(key.tagName)
+                tag_start = '<p>';
+                tag_end = '</p>'  
+                content1 = tag_start+key.textContent+tag_end
+                              
+            }
+            // console.log(content1)
+        }
+    }
+
+    }
+    document.getElementById("annotation").innerHTML = content1;
+   }
+   
+
+
+    //если всё, что ниже вынести за пределы fetch - не работает.
+    // const bodyTitle = xml.querySelector("body").querySelector('title').textContent
+    // const titleBook = xml.querySelector("book-title").textContent;
+    // const author = xml.querySelector("first-name").textContent +  " " +  xml.querySelector("last-name").textContent;;
+    // const annotation =  xml.querySelector("annotation").innerHTML 
+    // document.getElementById("titleBook").textContent = `Название: ${titleBook}`;
+    // document.getElementById("author").textContent = `Автор: ${author}`;
+    // console.log(titleBook);
+    // console.log(bodyTitle)
+    // console.log(author);
+    // console.log(annotation);
+
+    // document.getElementById("annotation").innerHTML = `${annotation}`;
+
+    // const section = [];
+    // const sectionAll = xml.querySelectorAll("section");
+    // console.log(sectionAll)
+
+    // проходим foreach по блоку ssection
+    // let content = '';
+    // let title_content = ''
+    //      sectionAll.forEach(element => {
+            
+            
+    //        let tag_start = '';
+    //        let  tag_end = '';
+    //        let node = element.tagName
 
             
 
             // Не обрабатывать вложенную секцию
-            if (node === 'section') {
-                title_content = element.firstElementChild.textContent
-            //   console.log(content)
-                content += element.innerHTML
+            // if (node === 'section') {
+            //     title_content = element.firstElementChild.innerHTML 
                 
-            } 
+            //     content  +=  title_content        
+                          
+            //     content += element.innerHTML
+                
+            // } 
 
             // if (element.childNodes.length) {
             //     console.log(element.childElementCount.length)
@@ -60,9 +123,11 @@ function someMethod(data) {
 
             
 
-        });
+        // });
 
-          document.getElementById("section").innerHTML = `${content}`;
+        //   document.getElementById("section").innerHTML = `${content}`;
+
+         
 
 
 
