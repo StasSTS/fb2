@@ -33,6 +33,10 @@ function someMethod(data, tag_name) {
     console.log(elemLength)
     let subElemLength = 0
     let txt = ''
+    let tempTxt = ''
+
+
+
     parseHtml(start)
 
     function parseHtml(elem){
@@ -43,7 +47,9 @@ function someMethod(data, tag_name) {
         for (let i = 0; i < elemLength; i++){
             console.log(innerElements[i].tagName) 
             console.log(innerElements[i].textContent) 
-            txt += innerElements[i].innerHTML + ' '
+          tempTxt = innerElements[i].textContent.replace(/\n/gi, '<br>')
+            txt += tempTxt + ' '
+            console.log(tempTxt)
             if (elemLength <= i) {
                 console.log(`i - ${i}`)
                 return txt
@@ -53,8 +59,16 @@ function someMethod(data, tag_name) {
         Array.from(innerElements).forEach(item => parseHtml(item))
     }
     document.getElementById(tag_name).innerHTML = txt;
+
+    
 }
+
+// const bookTitle = xmlParser(url, 'book-title');
+// console.log(bookTitle)
+
+
 const authorName = xmlParser(url, 'author');
+
 const annotation = xmlParser(url, 'annotation');
 
 
