@@ -30,47 +30,94 @@ function someMethod(data, tag_name) {
     let count = 0;
 
     let elemLength = parent[0].children.length
-    console.log(elemLength)
+    console.log(`elemLength: ${elemLength}`)
     let subElemLength = 0
     let txt = ''
-    let tempTxt = ''
-
-
-
     parseHtml(start)
 
     function parseHtml(elem){
-        // console.log(elem)
-        let innerElements = elem.children
+        let startTag = '';
+        let endTag = '';
+
+        if(elem.children.length > 0)
+        {
+            elemLength = elem.children.length
+            console.log('if')}
+        else{
+            elemLength = 0
+            console.log('else')
+        }
+        
+         if(elemLength === 0){
+            let  innerElements = elem
+            console.log(innerElements)
+            console.log(`elemLength: ${elemLength}`)
+            console.log(innerElements.tagName)
+
+            if(innerElements.tagName == 'p'){
+                startTag = '<p>';
+                endTag = '</p>'
+            }
+            if(innerElements.tagName == 'v'){
+                
+                endTag = '<br>'
+            }
+            console.log(innerElements.innerHTML)
+            txt +=  startTag + innerElements.textContent + ' ' + endTag
+            console.log(txt)
+            count++
+            console.log(`count: ${count}`)
+         } else {
+         let innerElements = elem.children
         console.log(innerElements)
 
-        for (let i = 0; i < elemLength; i++){
-            console.log(innerElements[i].tagName) 
-            console.log(innerElements[i].textContent) 
-          tempTxt = innerElements[i].textContent.replace(/\n/gi, '<br>')
-            txt += tempTxt + ' '
-            console.log(tempTxt)
-            if (elemLength <= i) {
-                console.log(`i - ${i}`)
-                return txt
-            }
-        }
-        elemLength = 0
+        // for (let i = 0; i < elemLength; i++){
+        //     // console.log(innerElements[i].tagName) 
+        //     // console.log(innerElements[i].textContent) 
+        //     txt += innerElements[i].innerHTML + ' '
+        //     console.log(`txt в for: ${txt}`)
+        //     // if (elemLength <= i) {
+        //     //     console.log(`i - ${i}`)
+        //     //     return txt
+        //     // }
+        // }
+         
+        count++
+        console.log(`count: ${count}`)
+        console.log(`elemLength: ${elemLength}`)
         Array.from(innerElements).forEach(item => parseHtml(item))
     }
+    }
     document.getElementById(tag_name).innerHTML = txt;
-
-    
 }
-
-// const bookTitle = xmlParser(url, 'book-title');
-// console.log(bookTitle)
-
+const bookTitle = xmlParser(url, 'book-title');
 
 const authorName = xmlParser(url, 'author');
 
 const annotation = xmlParser(url, 'annotation');
+const section = xmlParser(url, 'body');
 
+
+// function parseHtml(elem){
+//     // console.log(elem)
+//     let innerElements = elem.children
+//     console.log(innerElements)
+
+//     for (let i = 0; i < elemLength; i++){
+//         console.log(innerElements[i].tagName) 
+//         console.log(innerElements[i].textContent) 
+//       tempTxt = innerElements[i].textContent.replace(/\n/gi, '<br>')
+//         txt += tempTxt + ' '
+//         console.log(tempTxt)
+//         if (elemLength <= i) {
+//             console.log(`i - ${i}`)
+//             return txt
+//         }
+//     }
+//     elemLength = 0
+//     Array.from(innerElements).forEach(item => parseHtml(item))
+// }
+// document.getElementById(tag_name).innerHTML = txt;
 
     // function treeTravelsal(elem) {
     //     let innerElements = elem.children;
